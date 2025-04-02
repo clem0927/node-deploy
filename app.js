@@ -1,3 +1,4 @@
+console.log("현재 실행 중인 파일 경로:", __filename);
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
