@@ -9,9 +9,6 @@ const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
 
-const RedisStore = require('connect-redis').default;
-const Redis = require('ioredis'); // ✅ ioredis 사용
-
 dotenv.config();
 
 const pageRouter = require('./routes/page');
@@ -60,26 +57,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-/**
- * ✅ Redis 클라이언트 설정 (Redis Cloud 연결)
- */
-const redisClient = new Redis({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD,
-  tls: {}, // Redis Cloud는 TLS 필요
-  legacyMode: true,
-});
-redisClient.connect().catch(console.error);
-
-/**
- * ✅ RedisStore를 express-session과 연결
- */
 const sessionOption = {
-  store: new RedisStore({
-    client: redisClient,
-    prefix: 'sess:',
-  }),
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
@@ -91,7 +69,7 @@ const sessionOption = {
 
 if (process.env.NODE_ENV === 'production') {
   sessionOption.proxy = true;
-  // sessionOption.cookie.secure = true; // HTTPS 적용 시 활성화
+  // sessionOption.cookie.secure = true;
 }
 
 app.use(session(sessionOption));
