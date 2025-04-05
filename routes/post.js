@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const multerGoogleStorage=require('multer-google-storage');
 
 const { afterUploadImage, uploadPost } = require('../controllers/post');
 const { isLoggedIn } = require('../middlewares');
@@ -16,14 +17,13 @@ try {
 }
 
 const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-    },
+  storage:multerGoogleStorage.storageEngine({
+    bucket:'clem-nodebird',
+    projectId:'digital-display-455612-g3',
+    keyFilename:'digital-display-455612-g3-498f33e43cb0.json',
+    filename:(req, file, cb)=>{
+      cb(null,`original/${Date.now()}_${file.originalname}`);
+    },  
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
