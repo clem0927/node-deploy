@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>{{title}}</title>
+    <title>LIGHT WEIGHT</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/main.css">
@@ -11,7 +11,7 @@
     <div class="container">
       
       <div class="main-banner">
-        LIGHT WEIGHT
+        <img src="images/light weight logo.png" class="middle-logo"/>
       </div>
       <div class="timeline">
         {% if user %}
@@ -38,26 +38,26 @@
             <div>
               <div class="twits">
                 <form id="hashtag-form" action="/hashtag">
-                  <input type="text" name="hashtag" placeholder="태그 검색">
-                  <button class="btn">검색</button>
+                  <input type="text" name="hashtag" placeholder="태그 검색" id="tag-input">
+                  <button id="search-btn"><img src="images/search.png"></button>
                 </form>
               </div>
             </div>
             <div class="twit-btns">
-              <button id="prev-btn">←</button>
-              <button id="next-btn">→</button>
+              <button id="prev-btn">&lt</button>
+              <button id="next-btn">&gt</button>
             </div>
             <div class="carousel-track">
               {% for twit in twits %}
                 <div class="twit-slide">
                   <input type="hidden" value="{{twit.User.id}}" class="twit-user-id">
                   <input type="hidden" value="{{twit.id}}" class="twit-id">
-                  <div class="twit-author">{{twit.User.nick}}</div>
+                  <div class="twit-author"><img id="myprofile" src="/images/dumbell.png" class="profile-img2"><span class="user-span">{{twit.User.nick}}</span>
                   {% if not followingIdList.includes(twit.User.id) and twit.User.id !== user.id %}
-                    <button class="twit-follow">팔로우하기</button>
-                  {% endif %}
+                    <span class="user-span"><button class="twit-follow">팔로우</button></span>
+                  {% endif %}</div>
                   {% if twit.img %}
-                  <div class="twit-img"><img src="{{twit.img}}" alt="섬네일"></div>
+                  <div class="twit-img"><img src="{{twit.img}}" alt="섬네일" class="img-zone"></div>
                   {% endif %}
                   {% if not twit.img %}
                   <div class="twit-img">no image</div>
@@ -111,7 +111,7 @@
           </div>
         {% else %}
           <form id="login-form" action="/auth/login" method="post">
-            <div id="left-banner"><img src="/images/light-weight.png" style="width:80%;height:150px;padding-left:30px"></div>
+            <div id="left-banner"><img src="images/light weight logo.png" class="left-logo" ></div>
             <div class="login-zone">
               <div class="input-group">
                 <label for="email"></label>

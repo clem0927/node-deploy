@@ -8,13 +8,20 @@ html, body { margin: 0; padding: 0; height: 100%;background-color: #f0f3f5;overf
 .main-banner{
   position: absolute;
   left:50%;
-  top:3%;
-  transform: translate(-50%,-5%);
+  top:1%;
+  transform: translate(-50%,-1%);
   font-size:30px;
   font-weight: bold;
   background-color: white;
   color:black;
   z-index: 100;
+  width:100px;
+  height: 6vh;
+}
+.middle-logo{
+  width:100%;
+  height: 100%;
+  box-shadow: 0 4px 5px lightgray;
 }
 .btn {
   display: inline-block;
@@ -117,8 +124,20 @@ html, body { margin: 0; padding: 0; height: 100%;background-color: #f0f3f5;overf
   background: crimson;
   border: none;
 }
-.twit-author { display: inline-block; font-weight: bold; margin-right: 10px; }
-.twit-follow {
+.twit-author {display:flex;  font-weight: bold;margin-left:10px; margin-right: 10px;height:5vh; }
+.user-span{
+  line-height: 5vh;
+  padding-left:5px;
+  
+}
+.profile-img2{
+  width:4vh;
+  height:4vh;
+  border-radius: 50%;
+  border:black 2px solid;
+  margin-top:5px;
+}
+.twit-follow {/*팔로우버튼*/
   padding: 1px 5px;
   background: #fff;
   border: 1px solid silver;
@@ -131,8 +150,14 @@ html, body { margin: 0; padding: 0; height: 100%;background-color: #f0f3f5;overf
 .twit-img img { max-width: 75%; }
 .error-message { color: red; font-weight: bold; }
 #search-form { text-align: right; }
-#join-form { padding: 10px; text-align: center; }
-#hashtag-form { text-align: right; }
+#join-form { padding: 10px; text-align: center; align-items: center;}
+#hashtag-form {
+  display: flex;
+  align-items: center;       /* 수직 가운데 정렬 */
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  height: 5vh;               /* 높이 설정 필요 시 */
+  padding-right: 10px;       /* 필요 시 여백 */
+}
 footer { text-align: center; }
 
 #banner-1{
@@ -140,6 +165,51 @@ footer { text-align: center; }
   font-weight: bold;
 }
 /*carousel*/
+#prev-btn{
+  border:none;
+  cursor:pointer;
+  background-color: white;
+  font-size: 20px;
+  height: 60%;
+  width:40px;
+}
+#search-btn{
+  background-color: white;
+  border:none;
+  margin-right:1px;
+  border:1px solid lightgray;
+  cursor:pointer;
+  border-radius: 100%;
+  margin-left:5px;
+}
+#search-btn:hover{
+ background-color: rgba(0, 0, 0, 0.1);
+}
+#next-btn{
+  border:none;
+  cursor:pointer;
+  background-color: white;
+  font-size: 20px;
+  height: 60%;
+  width:40px;
+}
+#prev-btn:hover{
+  border-radius: 100%;
+  border:2px solid #f0f3f5;
+}
+#next-btn:hover{
+  border-radius: 100%;
+  border:2px solid #f0f3f5;
+}
+.twits{
+  height: 5vh;
+  
+}
+
+.twit-btns{
+ height: 2vh;
+}
+
 .carousel-wrapper{
   width:550px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -155,14 +225,14 @@ footer { text-align: center; }
 }
 .carousel-container {
   width: 550px; /* 보여줄 슬라이드 크기 */
-  height: 700px;
+  height: 80vh;
   overflow: hidden;
   position: relative;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: absolute;
   left:50%;
-  top:30%;
-  transform:translate(-50%,-30%)
+  top:40%;
+  transform:translate(-50%,-40%);
 }
 
 .carousel-track {
@@ -172,12 +242,17 @@ footer { text-align: center; }
 
 .twit-slide {
   flex: 0 0 100%; /* 한 번에 하나만 보이게 */
+  height: 50vh;
   box-sizing: border-box;
+  
 }
 .twit-img{
+
   width:100%;
-  height: 400px;
+  height: 45vh;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 .twit-btns{
   width:100%;
   height: 50px;
@@ -191,8 +266,12 @@ footer { text-align: center; }
 .twit-content{
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   background-color: white;
-  height: 300px;
+  height: 25vh;
+  padding-left:10px;
 }
+
+
+
 /*로그인 관련*/
 #login-form{
   width:100%;
@@ -226,6 +305,13 @@ footer { text-align: center; }
   padding-left:20px;
   padding-top:60px;
   margin-bottom: 10px;
+ 
+}
+.left-logo{
+  box-shadow: 0 6px 10px lightgray;
+  width: 60%;
+  height:120px;
+  margin-left: 60px;
 }
 .sign-zone{
   padding-top:10px;
@@ -253,4 +339,10 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
 .input-group{
   margin-bottom:5px;
   padding-left:20px;
+}
+#tag-input{
+  
+  height: 3vh;
+ 
+  width:30%;
 }
