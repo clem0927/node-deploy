@@ -1,29 +1,217 @@
-{% extends 'layout.html' %}
-
-{% block content %}
-  <div class="timeline">
-    <form id="join-form" action="/auth/join" method="post">
-      <div class="input-group">
-        <label for="join-email">이메일</label>
-        <input id="join-email" type="email" name="email"></div>
-      <div class="input-group">
-        <label for="join-nick">닉네임</label>
-        <input id="join-nick" type="text" name="nick"></div>
-      <div class="input-group">
-        <label for="join-password">비밀번호</label>
-        <input id="join-password" type="password" name="password">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/main.css">
+  </head>
+  <body>
+    <div class="container">
+      
+      <div class="main-banner">
+        LIGHT WEIGHT
       </div>
-      <button id="join-btn" type="submit" class="btn">회원가입</button>
-    </form>
-  </div>
-{% endblock %}
+      <div class="timeline">
+        {% if user %}
+          <!--<div>
+            <form id="twit-form" action="/post" method="post" enctype="multipart/form-data">
+              <div class="input-group">
+                <textarea id="twit" name="content" maxlength="140"></textarea>
+              </div>
+              <div class="img-preview">
+                <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
+                <input id="img-url" type="hidden" name="url">
+              </div>
+              <div>
+                <label id="img-label" for="img">사진 업로드</label>
+                <input id="img" type="file" accept="image/*">
+                <button id="twit-btn" type="submit" class="btn">짹짹</button>
+              </div>
+            </form>
+          </div>
+        -->
+        {% endif %}<!--카루셀 여기다 만들면댐-->
+        <div class="carousel-wrapper">
+          <div class="carousel-container">
+            <div>
+              <div class="twits">
+                <form id="hashtag-form" action="/hashtag">
+                  <input type="text" name="hashtag" placeholder="태그 검색">
+                  <button class="btn">검색</button>
+                </form>
+              </div>
+            </div>
+            <div class="twit-btns">
+              <button id="prev-btn">←</button>
+              <button id="next-btn">→</button>
+            </div>
+            <div class="carousel-track">
+              {% for twit in twits %}
+                <div class="twit-slide">
+                  <input type="hidden" value="{{twit.User.id}}" class="twit-user-id">
+                  <input type="hidden" value="{{twit.id}}" class="twit-id">
+                  <div class="twit-author">{{twit.User.nick}}</div>
+                  {% if not followingIdList.includes(twit.User.id) and twit.User.id !== user.id %}
+                    <button class="twit-follow">팔로우하기</button>
+                  {% endif %}
+                  {% if twit.img %}
+                  <div class="twit-img"><img src="{{twit.img}}" alt="섬네일"></div>
+                  {% endif %}
+                  {% if not twit.img %}
+                  <div class="twit-img">no image</div>
+                  {% endif %}
+                  <div class="twit-content">{{twit.content}}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>  
+        </div>  
+      <div class="profile-wrap">
+        <button id="toggle-profile" class="btn" style="position:absolute; left: 25vw; top: 10px; z-index: 200;border:1px solid lightgray"><span class="togglespan" style="font-weight: bold;font-size: 15px;color:gray">&lt</span></button>
+        <div class="profile">
+          {% if user and user.id %}
+          <div class="user-name"><img id="myprofile" src="/images/dumbell.png" class="profile-img"><div class="uname">{{ user.nick }}</div></div>
+          
+          <div class="half-zone">
+            <div class="half">
+              <div>팔로잉</div>
+              <div class="count following-count">{{followingCount}}</div>
+            </div>
+            <div class="half">
+              <div>팔로워</div>
+              <div class="count follower-count">{{followerCount}}</div>
+            </div>
+          </div>
+          <input id="my-id" type="hidden" value="{{user.id}}">
+          <!--<a id="my-profile" href="/profile" class="btn">내 프로필</a>-->
+          <div class="nav-zone">
+            <div class="navbar1">
+              <div>crud</div>
+              <a id="logout" href="/editprofile" class="btn">프로필 수정</a>
+              <a id="logout" href="/auth/logout" class="btn">개인정보 수정</a>
+              <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+            </div>
+            <div class="navbar2">
+              <div>게시글 crud</div>
+              <a id="logout" href="/auth/logout" class="btn">피드 올리기</a>
+              <a id="logout" href="/auth/logout" class="btn">피드 관리</a>
+            </div>
+            <div class="navbar3">
+              <div>운동관리</div>
+              <a id="logout" href="/auth/logout" class="btn">플래너</a>
+              <a id="logout" href="/auth/logout" class="btn">성장일지</a>
+            </div>
+            <div class="navbar4">
+              <div>영양관리</div>
+              <a id="logout" href="/auth/logout" class="btn">식단</a>
+              <a id="logout" href="/auth/logout" class="btn">영양</a>
+            </div>
+          </div>
+        {% else %}
+        <div id="left-banner"><img src="/images/light-weight.png" style="width:80%;height:150px;padding-left:30px"></div>
+        <div class="timeline">
+          <form id="join-form" action="/auth/join" method="post">
+            <div class="input-group">
+              <label for="join-email">이메일</label>
+              <input id="join-email" type="email" name="email"></div>
+            <div class="input-group">
+              <label for="join-nick">닉네임</label>
+              <input id="join-nick" type="text" name="nick"></div>
+            <div class="input-group">
+              <label for="join-password">비밀번호</label>
+              <input id="join-password" type="password" name="password">
+            </div>
+            <button id="join-btn" type="submit" class="btn">회원가입</button>
+          </form>
+        </div>
+      
+        {% endif %}
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      window.onload = () => {
+        if (new URL(location.href).searchParams.get('error')) {
+          alert(new URL(location.href).searchParams.get('error'));
+        }
+      };
+      if (document.getElementById('img')) {
+      document.getElementById('img').addEventListener('change', function(e) {
+        const formData = new FormData();
+        console.log(this, this.files);
+        formData.append('img', this.files[0]);
+        axios.post('/post/img', formData)
+          .then((res) => {
+            document.getElementById('img-url').value = res.data.url;
+            document.getElementById('img-preview').src = res.data.url;
+            document.getElementById('img-preview').style.display = 'inline';
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+          });
+        }
+        document.querySelectorAll('.twit-follow').forEach(function(tag) {
+          tag.addEventListener('click', function() {
+            const myId = document.querySelector('#my-id');
+            if (myId) {
+              const userId = tag.parentNode.querySelector('.twit-user-id').value;
+              if (userId !== myId.value) {
+                if (confirm('팔로잉하시겠습니까?')) {
+                  axios.post(`/user/${userId}/follow`)
+                    .then(() => {
+                      location.reload();
+                    })
+                    .catch((err) => {
+                      console.error(err);
+                    });
+                }
+              }
+            }
+          });
+        });
+      const track = document.querySelector('.carousel-track');
+      const slides = document.querySelectorAll('.twit-slide');
+      let currentIndex = 0;
 
-{% block script %}
-  <script>
-    window.onload = () => {
+      document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentIndex > 0) {
+      currentIndex--;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+      });
+
+      document.getElementById('next-btn').addEventListener('click', () => {
+      if (currentIndex < slides.length - 1) {
+      currentIndex++;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+      });
+      const toggleBtn = document.getElementById("toggle-profile");
+      const profile = document.querySelector(".profile");
+      const togglespan=document.querySelector(".togglespan")
+      let isHidden = false;
+
+      toggleBtn.addEventListener("click", () => {
+        isHidden = !isHidden;
+        if (isHidden) {
+          profile.classList.add("hidden");
+          toggleBtn.style.left = "0px"; // 버튼도 같이 왼쪽으로 이동
+          togglespan.innerText=">";
+        } else {
+          profile.classList.remove("hidden");
+          toggleBtn.style.left = "25vw"; // 원래 위치로 복귀
+          togglespan.innerText="<";
+        }
+      });
+      window.onload = () => {
       if (new URL(location.href).searchParams.get('error')) {
         alert('이미 존재하는 이메일입니다.');
       }
     };
-  </script>
-{% endblock %}
+    </script>
+  </body>
+</html>

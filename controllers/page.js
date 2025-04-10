@@ -48,3 +48,22 @@ exports.renderHashtag = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.renderEditProfile=async (req,res,next)=>{
+  try {
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ['id', 'nick'],
+      },
+      order: [['createdAt', 'DESC']],
+    });
+    res.render('editprofile', {
+      title: 'NodeBird',
+      twits: posts,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+}

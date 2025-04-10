@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/detail1.css">
   </head>
   <body>
     <div class="container">
@@ -72,7 +73,7 @@
         <button id="toggle-profile" class="btn" style="position:absolute; left: 25vw; top: 10px; z-index: 200;border:1px solid lightgray"><span class="togglespan" style="font-weight: bold;font-size: 15px;color:gray">&lt</span></button>
         <div class="profile">
           {% if user and user.id %}
-          <div class="user-name"><img id="myprofile" src="/images/dumbell.png" class="profile-img"><div class="uname">{{ user.nick }}</div></div>
+          <div class="user-name"><img src="/images/dumbell.png" class="profile-img"><div class="uname">{{ user.nick }}</div></div>
           
           <div class="half-zone">
             <div class="half">
@@ -86,28 +87,15 @@
           </div>
           <input id="my-id" type="hidden" value="{{user.id}}">
           <!--<a id="my-profile" href="/profile" class="btn">내 프로필</a>-->
-          <div class="nav-zone">
-            <div class="navbar1">
-              <div>crud</div>
-              <a id="logout" href="/editprofile" class="btn">프로필 수정</a>
-              <a id="logout" href="/auth/logout" class="btn">개인정보 수정</a>
-              <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
-            </div>
-            <div class="navbar2">
-              <div>게시글 crud</div>
-              <a id="logout" href="/auth/logout" class="btn">피드 올리기</a>
-              <a id="logout" href="/auth/logout" class="btn">피드 관리</a>
-            </div>
-            <div class="navbar3">
-              <div>운동관리</div>
-              <a id="logout" href="/auth/logout" class="btn">플래너</a>
-              <a id="logout" href="/auth/logout" class="btn">성장일지</a>
-            </div>
-            <div class="navbar4">
-              <div>영양관리</div>
-              <a id="logout" href="/auth/logout" class="btn">식단</a>
-              <a id="logout" href="/auth/logout" class="btn">영양</a>
-            </div>
+          
+          <!--여기수정!-->
+          <div class="detail-content">
+            hi edit profile
+            <form id="edit-form" method="post" action="/auth/editNick">
+                닉네임변경:<span id="warning" style="color:red">{{warning}}</span><input type="text" name="nick" placeholder="변경할 닉네임 입력"/>
+                <input type="submit" value="변경" />
+            </form>
+            <a href="/">복귀</a>
           </div>
         {% else %}
           <form id="login-form" action="/auth/login" method="post">
@@ -133,6 +121,8 @@
           </form>
         {% endif %}
         </div>
+        <footer>
+        </footer>
       </div>
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

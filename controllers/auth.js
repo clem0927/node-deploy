@@ -46,3 +46,22 @@ exports.logout = (req, res) => {
     res.redirect('/');
   });
 };
+
+exports.editNick= async(req,res,next)=>{
+  const newNick=req.body.nick;
+  const user = req.user;
+  console.log(newNick);
+  if(newNick!=user.nick){
+    try{
+      await User.update({nick:newNick},{
+      where:{nick:user.nick}
+    });
+    }catch(error){
+      console.error(error);
+      res.redirect("editprofile");
+    }
+    res.redirect('/');
+  }else{
+    res.render("editprofile",{warning:"닉네임이 동일합니다!"});
+  }
+}
